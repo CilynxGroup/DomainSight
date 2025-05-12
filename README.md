@@ -4,6 +4,11 @@
 
 **DomainSight** is a one-stop **Red Team** asset discovery and vulnerability analysis platform, powered by AI for classification and professional exploitation advice.
 
+
+<p align="center">
+  <img src="static/DomainSight.png" alt="Dashboard Preview" width="700"/>
+</p>
+
 ---
 
 ## 📋 Table of Contents
