@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DomainSight - TLD Selection</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Select Target</h1>
+    <ul>
+      {% for tld in tlds %}
+        <li><a href="{{ url_for('view_tld', tld=tld) }}">{{ tld }}</a></li>
+      {% endfor %}
+    </ul>
+</body>
+</html>

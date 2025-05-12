@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Advice - {{ subdomain }}</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+      /* Page-specific overrides */
+      .card {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 1.5rem;
+      }
+      .meta {
+        color: var(--text-medium);
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+      .advice-box {
+        background-color: var(--bg-dark);
+        border: 1px solid var(--border-light);
+        padding: 1rem;
+        border-radius: 4px;
+        white-space: pre-wrap;
+        font-family: var(--font-mono);
+        color: var(--text-bright);
+        max-height: 60vh;
+        overflow-y: auto;
+        margin-bottom: 1.5rem;
+      }
+      .back-btn {
+        background-color: var(--accent-blue);
+        color: var(--text-bright);
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: background-color var(--transition);
+      }
+      .back-btn:hover {
+        background-color: var(--accent-red);
+      }
+    </style>
+</head>
+<body>
+<header>
+  <h1>DomainSight</h1>
+  <h2>AI Red Team Advice for: <strong>{{ subdomain }}</strong></h2>
+</header>
+<main>
+  <div class="card">
+    {% if advice %}
+      <h4>Risk Score: <span style="color: var(--accent-red);">{{ score }}</span></h4>
+      <p class="meta">Generated At: <strong>{{ timestamp }}</strong></p>
+      <pre class="advice-box">{{ advice }}</pre>
+    {% else %}
+      <p class="meta">No AI analysis has been generated yet for this subdomain.</p>
+    {% endif %}
+    <a href="/tld/{{ tld }}" class="back-btn">&larr; Back to Dashboard</a>
+  </div>
+</main>
+<footer>
+  <p>DomainSight v1.0 | © 2025 Red Team Labs</p>
+</footer>
+</html>

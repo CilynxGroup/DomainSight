@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DomainSight - Red Team Asset Platform</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+      .btn-clear, .btn-clear-all {
+        background: #e74c3c;
+        color: white;
+        border: none;
+        padding: 0.4rem 0.8rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        margin-left: 0.5rem;
+      }
+      .btn-clear-all {
+        float: right;
+        margin-top: 0.5rem;
+      }
+      .card-grid { display: flex; flex-wrap: wrap; gap: 1rem; }
+      .card { background:#fff; padding:1rem; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); flex:1 1 200px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>DomainSight</h1>
+        <h2>Red Team Asset Discovery, AI-Powered Risk Prioritization & Attack Surface Analysis</h2>
+        <form action="{{ url_for('clear_all') }}" method="post">
+          <button type="submit" class="btn-clear-all">Clear All Databases</button>
+        </form>
+    </header>
+
+    <main>
+        <section class="about">
+            <p>DomainSight helps Red Teams discover external assets, fingerprint technologies, detect misconfigurations, and prioritize attack surfaces using advanced AI analysis.</p>
+        </section>
+
+        <section class="projects">
+            <h3>Available TLD Projects:</h3>
+            <div class="card-grid">
+                {% for info in tlds_info %}
+                <div class="card">
+                    <h4>{{ info.tld }}</h4>
+                    <p><strong>Live Assets:</strong> {{ info.live_count }}</p>
+                    <p>
+                        <a href="{{ url_for('view_tld', tld=info.tld) }}">View Dashboard →</a>
+                        <form action="{{ url_for('clear_db', tld=info.tld) }}" method="post" style="display:inline;">
+                          <button type="submit" class="btn-clear">Clear DB</button>
+                        </form>
+                    </p>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>DomainSight v1.0 | © 2025 Red Team Labs</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,222 @@
+/* style.css - Red Team Cybersecurity Theme (Refined) */
+:root {
+    --bg-dark: #1f2937;
+    --bg-darker: #111827;
+    --text-light: #e5e7eb;
+    --text-bright: #f9fafb;
+    --accent-red: #e01b24;
+    --accent-green: #21d07a;
+    --accent-yellow: #ffd400;
+    --accent-blue: #5796f5;
+    --border-light: #374151;
+    --transition: 0.2s ease-in-out;
+    --font-mono: 'Source Code Pro', monospace;
+  }
+  
+  /* Global */
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    font-family: var(--font-mono);
+    line-height: 1.5;
+  }
+  
+  a, a:visited {
+    color: var(--accent-blue);
+    text-decoration: none;
+  }
+  a:hover {
+    color: var(--accent-red);
+    text-decoration: underline;
+  }
+  
+  /* Header */
+  header {
+    background-color: var(--bg-darker);
+    border-bottom: 2px solid var(--accent-red);
+    padding: 1rem;
+    text-align: center;
+  }
+  header h1 {
+    margin: 0;
+    color: var(--accent-red);
+    font-size: 2.5rem;
+  }
+  header h2 {
+    margin: 0;
+    color: var(--text-bright);
+    font-size: 1rem;
+  }
+  
+  /* Main */
+  main {
+    padding: 1.5rem;
+    max-width: 1200px;
+    margin: auto;
+    margin-bottom: 5rem; /* Space for footer */
+  }
+  
+  /* Projects Cards (Index) */
+  .projects .card {
+    background-color: var(--bg-darker);
+    border: 1px solid var(--border-light);
+  }
+  
+  /* Cards */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+  .card {
+    background-color: var(--bg-darker);
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
+    padding: 1rem;
+    transition: transform var(--transition), border-color var(--transition);
+  }
+  .card:hover {
+    transform: scale(1.02);
+    border-color: var(--accent-red);
+  }
+  .card h4 {
+    margin: 0 0 0.5rem 0;
+    color: var(--accent-red);
+  }
+  .card p {
+    margin: 0.5rem 0;
+    color: var(--text-light);
+  }
+  
+  /* Buttons */
+  .btn-clear, .btn-clear-all {
+    background-color: var(--accent-red);
+    color: var(--text-bright);
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 2px;
+    font-family: var(--font-mono);
+    cursor: pointer;
+    transition: background-color var(--transition);
+  }
+  .btn-clear:hover, .btn-clear-all:hover {
+    background-color: #b2161c;
+  }
+  
+  /* Summary Cards */
+  .summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .summary-card {
+    background-color: var(--bg-darker);
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
+    padding: 1rem;
+    flex: 1 1 220px;
+    transition: border-color var(--transition), background-color var(--transition);
+  }
+  .summary-card:hover {
+    border-color: var(--accent-red);
+    background-color: #1e2128;
+  }
+  .summary-card h3 {
+    margin: 0;
+    color: var(--accent-red);
+    font-size: 2rem;
+  }
+  .summary-card p {
+    margin: 0.5rem 0 0 0;
+    color: var(--text-light);
+  }
+  
+  /* Insight */
+  .insight {
+    background-color: var(--bg-darker);
+    border-left: 4px solid var(--accent-blue);
+    padding: 1rem;
+    margin: 1rem 0;
+    color: var(--text-light);
+  }
+  
+  /* Tabs */
+  .category-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0;
+  }
+  .tab-button {
+    background-color: var(--bg-darker);
+    color: var(--text-light);
+    border: 1px solid var(--border-light);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color var(--transition), border-color var(--transition);
+  }
+  .tab-button.active, .tab-button:hover {
+    background-color: var(--accent-red);
+    border-color: var(--accent-red);
+    color: var(--text-bright);
+  }
+  
+  /* Table */
+  table.display {
+    width: 100% !important;
+    border-collapse: collapse;
+    background-color: var(--bg-darker);
+    border: 1px solid var(--border-light);
+    margin: 1rem 0;
+  }
+  table.dataTable thead th {
+    background-color: var(--bg-darker);
+    color: var(--accent-red);
+    border-bottom: 2px solid var(--accent-red);
+    padding: 0.75rem;
+  }
+  table.dataTable tbody tr {
+    border-bottom: 1px solid var(--border-light);
+  }
+  table.dataTable tbody tr:hover {
+    background-color: #1e2128;
+  }
+  table.dataTable td {
+    padding: 0.5rem;
+    color: var(--text-light);
+  }
+  
+  /* Vulnerability Badges */
+  .vuln-badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    margin: 2px;
+    border-radius: 2px;
+    font-size: 0.75rem;
+    font-weight: bold;
+  }
+  .badge-critical { background-color: var(--accent-red); }
+  .badge-high     { background-color: #ff4500; }
+  .badge-medium   { background-color: var(--accent-yellow); color: var(--bg-dark); }
+  .badge-low      { background-color: var(--accent-green); }
+  .badge-unknown  { background-color: var(--text-low); }
+  
+  /* Footer - Always at bottom */
+  footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--bg-darker);
+    border-top: 1px solid var(--accent-red);
+    padding: 1rem;
+    text-align: center;
+    color: var(--text-light);
+    z-index: 100;
+  }
+  

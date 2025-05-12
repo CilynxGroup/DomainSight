@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DomainSight - Dashboard for {{ tld }}</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+</head>
+<body>
+    <header>
+        <h1>DomainSight</h1>
+        <h2>Attack Surface Dashboard: {{ tld }}</h2>
+    </header>
+
+    <main>
+        <section class="summary">
+            <div class="summary-card">
+                <h3 id="total-assets">0</h3>
+                <p>Total Subdomains</p>
+            </div>
+            <div class="summary-card">
+                <h3 id="high-risk">0</h3>
+                <p>High Risk Assets (Risk > 70)</p>
+            </div>
+            <div class="summary-card">
+                <h3 id="critical-vulns">0</h3>
+                <p>Critical Vulnerabilities</p>
+            </div>
+        </section>
+
+        <section class="insight">
+            <p>This dashboard organizes external subdomains discovered under <strong>{{ tld }}</strong> by purpose.  
+            Quickly investigate Admin Panels, APIs, Authentication portals, and more — based on AI-assisted classification and risk scoring.</p>
+            <p><em>Tip: Click a category tab to focus your attack surface investigation faster.</em></p>
+        </section>
+
+        <section class="category-tabs">
+            <button class="tab-button active" data-category="ALL">All</button>
+            <button class="tab-button" data-category="Admin Portal">Admin Portals</button>
+            <button class="tab-button" data-category="API Server">API Servers</button>
+            <button class="tab-button" data-category="Authentication/Login">Authentication/Login</button>
+            <button class="tab-button" data-category="Development/Testing Environment">Dev/Test Environments</button>
+            <button class="tab-button" data-category="Public Website">Public Websites</button>
+            <button class="tab-button" data-category="Monitoring/Status">Monitoring Systems</button>
+            <button class="tab-button" data-category="Storage/Bucket">Storage/Buckets</button>
+        </section>
+
+        <section>
+            <table id="assetTable" class="display compact">
+                <thead>
+                    <tr>
+                        <th>Subdomain</th>
+                        <th>Open Ports</th>
+                        <th>Vulnerabilities</th>
+                        <th>Backend</th>
+                        <th>Risk Score</th>
+                        <th>Attack Advice</th>
+                        <th>Category</th> <!-- Purpose -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Filled dynamically -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>DomainSight v1.0 | © 2025 Red Team Labs</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+    <script>
+      let allAssets = [];
+
+      $(document).ready(function() {
+        const tld = "{{ tld }}";
+
+        $.getJSON(`/api/tld/${tld}`, function(data) {
+            allAssets = data;
+            initDataTable(data);
+
+            // Fill Summary Cards
+            $('#total-assets').text(data.length);
+
+            let highRisk = data.filter(asset => parseInt(asset.risk_score) > 70).length;
+            $('#high-risk').text(highRisk);
+
+            let criticalVulns = data.filter(asset => (asset.vulnerabilities || '').toLowerCase().includes('critical')).length;
+            $('#critical-vulns').text(criticalVulns);
+        });
+
+        $('.tab-button').click(function() {
+            $('.tab-button').removeClass('active');
+            $(this).addClass('active');
+
+            let selectedCategory = $(this).data('category');
+            filterTableByCategory(selectedCategory);
+        });
+      });
+
+      function initDataTable(data) {
+        $('#assetTable').DataTable({
+            destroy: true,
+            data: data,
+            columns: [
+                { data: 'subdomain', render: function(data) { return `<a href="https://${data}" target="_blank">${data}</a>`; }},
+                { data: 'ports' },
+                { data: 'vulnerabilities', render: function(data) {
+                  if (!data) return '';
+                  const vulns = data.split(';');
+                  return vulns.map(v => {
+                      let cls = 'badge-unknown';
+                      if (v.includes('(critical)')) cls = 'badge-critical';
+                      else if (v.includes('(high)')) cls = 'badge-high';
+                      else if (v.includes('(medium)')) cls = 'badge-medium';
+                      else if (v.includes('(low)')) cls = 'badge-low';
+
+                      return `<span class="vuln-badge ${cls}">${v}</span>`;
+                  }).join(' ');
+              }},
+                { data: 'backend' },
+                { data: 'risk_score' },
+                { 
+                data: 'subdomain', 
+                render: function(data, type, row) {
+                    const tld = "{{ tld }}";
+                    return `<a href="/tld/${tld}/ai/${data}" target="_blank" class="ai-link">View Advice</a>`;
+                }
+              }
+              ,
+                { data: 'purpose' }
+            ],
+            pageLength: 25,
+            createdRow: function(row, data, dataIndex) {
+                if (parseInt(data['risk_score']) > 70) {
+                    $(row).css('background-color', '#ffe5e5');
+                }
+            }
+        });
+      }
+
+      function filterTableByCategory(category) {
+        let filtered = [];
+
+        if (category === "ALL") {
+            filtered = allAssets;
+        } else {
+            filtered = allAssets.filter(asset => asset.purpose === category);
+        }
+
+        initDataTable(filtered);
+      }
+    </script>
+</body>
+</html>
