@@ -21,7 +21,7 @@
 ---
 
 ## ✨ Features
-- **Subdomain Enumeration**: Subfinder, Amass, Assetfinder, Gobuster  
+- **Subdomain Enumeration**: Subfinder, Assetfinder, Gobuster  
 - **Live Checking**: dnsx  
 - **Passive Recon**: Shodan & Censys (ports auto-persisted)  
 - **Port & Service Scanning**: Nmap  
@@ -46,7 +46,7 @@
 ## 📦 Requirements
 - Python ≥ 3.8  
 - Git  
-- CLI tools: `subfinder`, `amass`, `assetfinder`, `gobuster`, `dnsx`, `nmap`, `nuclei`  
+- CLI tools: `subfinder`,, `assetfinder`, `gobuster`, `dnsx`, `nmap`, `nuclei`  
 - **Optional**: Shodan API key or Censys credentials  
 - **Required**: OpenAI API key  
 
@@ -55,7 +55,7 @@
 ## 🚀 Installation
 
 ```
-git clone git@github.com:YOUR_USERNAME/DomainSight.git
+git clone https://github.com/CilynxGroup/DomainSight.git
 cd DomainSight
 pip install -r requirements.txt
 ```
@@ -133,6 +133,6 @@ Visit: `http://localhost:5000`
 ---
 
 ## 📄 License
-MIT © 2025 Red Team Labs  
+MIT © 2025 Cilynx Red Team Labs 
 See [LICENSE](LICENSE)  
 
