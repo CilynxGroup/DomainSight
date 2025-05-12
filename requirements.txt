@@ -1,0 +1,6 @@
+flask
+rich
+openai
+shodan
+requests
+python-dotenv
